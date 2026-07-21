@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>عبر الأصول العقارية | إدارة وتطوير الاستثمارات العقارية</title>
+
+    <meta name="description"
+        content="عبر الأصول العقارية - خدمات الوساطة العقارية، إدارة العقارات، التسويق العقاري، والاستثمار العقاري في المملكة العربية السعودية.">
+
+    <meta name="theme-color" content="#111111">
+
+    <!--================ FONTS =================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!--================ ICONS =================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!--================ STYLES =================-->
+    <link rel="stylesheet" href="style.css">
+
+    <!--================ PAGE ENHANCEMENTS =================-->
+    <style>
+        /*================ MOBILE MENU =================*/
+
+        .menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-actions {
+                position: relative;
+            }
+
+            .nav-actions ul {
+                display: none;
+                width: 100%;
+                padding: 18px;
+                border-radius: 14px;
+                background: rgba(17, 17, 17, .96);
+            }
+
+            .nav-actions.menu-open ul {
+                display: flex;
+            }
+
+            .nav-actions .btn-call {
+                display: none;
+            }
+        }
+
+        /*================ ABOUT FEATURES =================*/
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .about-text {
+            line-height: 2.2;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 14px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .07);
+        }
+
+        .about-feature i {
+            color: #c8a04d;
+            font-size: 24px;
+            min-width: 30px;
+        }
+
+        .about-feature strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .about-feature span {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /*================ FORM SELECT =================*/
+
+        .input-box select {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            background: #fff;
+            color: #333;
+        }
+
+        .input-box select:focus {
+            border-color: #c8a04d;
+            outline: none;
+            box-shadow: 0 0 12px rgba(200, 160, 77, .18);
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            background: #e9f8ee;
+            color: #18713a;
+        }
+
+        /*================ CONTACT LINKS =================*/
+
+        .contact-box a {
+            color: inherit;
+            transition: .3s;
+        }
+
+        .contact-box a:hover {
+            color: #c8a04d;
+        }
+
+        /*================ WHATSAPP BUTTON =================*/
+
+        .whatsapp-float {
+            position: fixed;
+            left: 25px;
+            bottom: 25px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #25d366;
+            color: #fff;
+            font-size: 29px;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .22);
+            transition: .3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-float {
+                left: 18px;
+                bottom: 18px;
+            }
+        }
+
+        body.dark .about-feature {
+            background: #242424;
+        }
+
+        body.dark .about-text,
+        body.dark .about-feature span {
+            color: #bbb;
+        }
+
+        body.dark .input-box select {
+            background: #2b2b2b;
+            color: #fff;
+            border-color: #444;
+        }
+    </style>
+
+    <!--================ STRUCTURED DATA =================-->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "عبر الأصول العقارية",
+        "telephone": "+966575700009",
+        "email": "aberalakariah@gmail.com",
+        "description": "شركة متخصصة في الوساطة العقارية وإدارة العقارات والاستثمار العقاري.",
+        "areaServed": "SA"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!--================ HEADER =================-->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo" aria-label="العودة إلى الصفحة الرئيسية">
+                    <img src="images/logo.png" id="logo" alt="شعار عبر الأصول العقارية">
+                </a>
+
+                <div class="nav-actions">
+                    <button id="menu-toggle" class="theme-toggle menu-toggle" aria-label="فتح القائمة" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <ul id="main-menu">
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#about">من نحن</a></li>
+                        <li><a href="#services">خدماتنا</a></li>
+                        <li><a href="#projects">مشاريعنا</a></li>
+                        <li><a href="#clients">عملاؤنا</a></li>
+                        <li><a href="#inquiry">الاستفسارات</a></li>
+                        <li><a href="#contact">تواصل معنا</a></li>
+                    </ul>
+
+                    <button id="theme-toggle" class="theme-toggle" aria-label="تغيير المظهر">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <a href="tel:0575700009" class="btn btn-call">
+                        <i class="fa-solid fa-phone"></i>
+                        اتصل بنا
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!--================ HERO =================-->
+    <section class="hero">
+        <div class="overlay"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge">شركة عقارية مرخصة</span>
+
+                <h1>استثمار عقاري يبدأ بالثقة... وينتهي بالنجاح</h1>
+
+                <p>
+                    نقدم حلولاً عقارية متكاملة تشمل الوساطة العقارية، إدارة العقارات، التسويق العقاري،
+                    والاستشارات الاستثمارية لتحقيق أعلى قيمة لأصولك.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#services" class="btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        استكشف خدماتنا
+                    </a>
+
+                    <a href="#contact" class="btn-outline">
+                        <i class="fa-solid fa-comments"></i>
+                        اطلب استشارة
+                    </a>
+
+                    <a href="profile.pdf" class="btn btn-profile" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        عرض الملف التعريفي
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ ABOUT =================-->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <span>من نحن</span>
+                <h2>شريكك الموثوق في القطاع العقاري</h2>
+            </div>
+
+            <div class="about-content">
+                <p class="about-text">
+                    نسعى إلى تقديم خدمات عقارية احترافية وفق أعلى المعايير، مع التركيز على الجودة والشفافية
+                    والابتكار، لنكون الشريك الموثوق في إدارة وتنمية الاستثمارات العقارية وتحقيق أفضل قيمة ممكنة
+                    لعملائنا.
+                </p>
+
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div>
+                            <strong>ثقة وشفافية</strong>
+                            <span>تعامل واضح وموثوق في جميع مراحل العمل.</span>
+                        </div>
+                    </div>
+
+                    <div class="about-feature">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <div>
+                            <strong>خبرة واحترافية</strong>
+                            <span>فريق متخصص يقدم حلولاً عقارية مدروسة.</span>
+                        </div>
+                    </div>
+
+                    <div class="about-feature">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <div>
+                            <strong>تنمية الأصول</strong>
+                            <span>نساعدك على زيادة قيمة استثماراتك العقارية.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ SERVICES =================-->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <span>خدماتنا</span>
+                <h2>حلول عقارية متكاملة</h2>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <i class="fa-solid fa-building"></i>
+                    <h3>الوساطة العقارية</h3>
+                    <p>بيع وشراء وتأجير العقارات بكل احترافية مع متابعة دقيقة لكل التفاصيل.</p>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-city"></i>
+                    <h3>إدارة العقارات وتشغيلها</h3>
+                    <p>إدارة وتشغيل الأصول العقارية بكفاءة عالية لضمان أفضل النتائج والعوائد.</p>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>الاستثمار العقاري</h3>
+                    <p>حلول استثمارية مدروسة تساعدك على تحقيق أفضل العوائد وتنمية الأصول.</p>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <h3>التسويق العقاري</h3>
+                    <p>خطط تسويقية فعالة للوصول إلى العملاء وتحقيق أفضل فرص البيع والتأجير.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ PROJECTS =================-->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-title">
+                <span>مشاريعنا</span>
+                <h2>أحدث المشاريع العقارية</h2>
+            </div>
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="images/project1.jpg" alt="مشروع سكني فاخر" loading="lazy">
+                    <div class="project-info">
+                        <h3>مشروع سكني فاخر</h3>
+                        <p>تصميم عصري وموقع مميز يحقق تجربة سكنية راقية.</p>
+                        <a href="#contact" class="btn">اطلب التفاصيل</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="images/project2.jpg" alt="مجمع تجاري متكامل" loading="lazy">
+                    <div class="project-info">
+                        <h3>مجمع تجاري متكامل</h3>
+                        <p>وجهة استثمارية مميزة بمواصفات عالية وموقع استراتيجي.</p>
+                        <a href="#contact" class="btn">اطلب التفاصيل</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="images/project3.jpg" alt="برج استثماري حديث" loading="lazy">
+                    <div class="project-info">
+                        <h3>برج استثماري حديث</h3>
+                        <p>أحد المشاريع النوعية التي تجمع بين الفخامة والقيمة الاستثمارية.</p>
+                        <a href="#contact" class="btn">اطلب التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ CLIENTS =================-->
+    <section id="clients" class="clients">
+        <div class="container">
+            <div class="section-title">
+                <span>عملاؤنا</span>
+                <h2>نفخر بثقة شركائنا</h2>
+                <p class="section-desc">نفخر بالتعاون مع نخبة من الجهات والشركات في مختلف القطاعات.</p>
+            </div>
+
+            <div class="clients-slider">
+                <div class="slide"><img src="images/clients/client1.png" alt="شريك 1" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client2.png" alt="شريك 2" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client3.png" alt="شريك 3" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client4.png" alt="شريك 4" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client5.png" alt="شريك 5" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client6.png" alt="شريك 6" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client7.png" alt="شريك 7" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client8.png" alt="شريك 8" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client9.png" alt="شريك 9" loading="lazy"></div>
+                <div class="slide"><img src="images/clients/client10.png" alt="شريك 10" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ STATS =================-->
+    <section class="stats">
+        <div class="container">
+            <div class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <h2 data-target="500">0</h2>
+                <p>عميل</p>
+            </div>
+
+            <div class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
+                <h2 data-target="250">0</h2>
+                <p>عقار</p>
+            </div>
+
+            <div class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+                <h2 data-target="15">0</h2>
+                <p>سنة خبرة</p>
+            </div>
+
+            <div class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-thumbs-up"></i></div>
+                <h2 data-target="100">0</h2>
+                <p>رضا العملاء</p>
+            </div>
+        </div>
+    </section>
+
+    <!--================ INQUIRY =================-->
+    <section id="inquiry" class="inquiry">
+        <div class="container">
+            <div class="section-title">
+                <span>الاستفسارات</span>
+                <h2>أرسل استفسارك</h2>
+                <p class="section-desc">
+                    يسعدنا استقبال استفساراتكم، وسيقوم فريقنا بالتواصل معكم في أقرب وقت.
+                </p>
+            </div>
+
+            <form class="inquiry-form" id="inquiry-form">
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="client-name">اسم العميل</label>
+                        <input id="client-name" name="client_name" type="text"
+                            placeholder="أدخل اسمك الكامل" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="client-phone">رقم الهاتف</label>
+                        <input id="client-phone" name="client_phone" type="tel"
+                            placeholder="05xxxxxxxx" pattern="05[0-9]{8}" required>
+                    </div>
+                </div>
+
+                <div class="input-box full">
+                    <label for="client-email">البريد الإلكتروني</label>
+                    <input id="client-email" name="client_email" type="email"
+                        placeholder="example@email.com">
+                </div>
+
+                <div class="input-box full">
+                    <label for="service-type">نوع الخدمة</label>
+                    <select id="service-type" name="service_type" required>
+                        <option value="">اختر نوع الخدمة</option>
+                        <option value="brokerage">الوساطة العقارية</option>
+                        <option value="management">إدارة العقارات وتشغيلها</option>
+                        <option value="investment">الاستثمار العقاري</option>
+                        <option value="marketing">التسويق العقاري</option>
+                        <option value="consultation">استشارة عقارية</option>
+                    </select>
+                </div>
+
+                <div class="input-box full">
+                    <label for="inquiry-message">وصف الاستفسار</label>
+                    <textarea id="inquiry-message" name="message" rows="7"
+                        placeholder="اكتب تفاصيل استفسارك هنا..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    إرسال الاستفسار
+                </button>
+
+                <div class="form-message" id="form-message">
+                    تم استلام استفسارك بنجاح، وسنتواصل معك قريبًا.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!--================ CONTACT =================-->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <span>تواصل معنا</span>
+                <h2>نحن في خدمتك</h2>
+            </div>
+
+            <div class="contact-box">
+                <div>
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:0575700009">0575700009</a>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:aberalakariah@gmail.com">aberalakariah@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ FOOTER =================-->
+    <footer>
+        <div class="container">
+            <img src="images/logo.png" alt="شعار عبر الأصول العقارية" loading="lazy">
+            <p>© 2026 عبر الأصول العقارية - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!--================ WHATSAPP =================-->
+    <a href="https://wa.me/966575700009" class="whatsapp-float" target="_blank"
+        rel="noopener" aria-label="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!--================ SCRIPTS =================-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
