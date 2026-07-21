@@ -15,7 +15,7 @@ function updateThemeIcon() {
     if (body.classList.contains("dark")) {
         themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
         themeBtn.setAttribute("aria-label", "تفعيل الوضع النهاري");
-        logo.src = "images/logo-white.png";
+        logo.src = "images/logo.png";
     } else {
         themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
         themeBtn.setAttribute("aria-label", "تفعيل الوضع الليلي");
