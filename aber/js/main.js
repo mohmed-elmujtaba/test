@@ -1,5 +1,3 @@
-/*================ ELEMENTS =================*/
-
 const themeBtn = document.getElementById("theme-toggle");
 const menuBtn = document.getElementById("menu-toggle");
 const navActions = document.querySelector(".nav-actions");
@@ -13,13 +11,11 @@ const formMessage = document.getElementById("form-message");
 
 /*================ THEME TOGGLE =================*/
 
-const savedTheme = localStorage.getItem("theme");
-
 function updateThemeIcon() {
     if (body.classList.contains("dark")) {
         themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
         themeBtn.setAttribute("aria-label", "تفعيل الوضع النهاري");
-        logo.src = "images/logo.png";
+        logo.src = "images/logo-white.png";
     } else {
         themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
         themeBtn.setAttribute("aria-label", "تفعيل الوضع الليلي");
@@ -27,7 +23,7 @@ function updateThemeIcon() {
     }
 }
 
-if (savedTheme === "dark") {
+if (localStorage.getItem("theme") === "dark") {
     body.classList.add("dark");
 }
 
@@ -81,14 +77,21 @@ window.addEventListener("scroll", () => {
     const currentScroll =
         window.pageYOffset || document.documentElement.scrollTop;
 
-    if (header) {
-        header.classList.toggle("scrolled", currentScroll > 120);
+    if (!header) {
+        return;
+    }
 
+    header.classList.toggle("scrolled", currentScroll > 120);
+
+    // إبقاء الهيدر ثابتًا وعدم إخفائه على الهاتف
+    if (window.innerWidth > 991) {
         if (currentScroll > lastScrollTop && currentScroll > 100) {
             header.classList.add("hide");
         } else {
             header.classList.remove("hide");
         }
+    } else {
+        header.classList.remove("hide");
     }
 
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
@@ -177,7 +180,7 @@ function addPropertiesSection() {
                 </p>
             </div>
 
-            <div class="property-filters" aria-label="تصفية العقارات">
+            <div class="property-filters">
                 <button class="property-filter active" data-filter="all">
                     جميع العقارات
                 </button>
@@ -199,12 +202,12 @@ function addPropertiesSection() {
     const filters = document.querySelectorAll(".property-filter");
 
     function renderProperties(filter = "all") {
-        const filteredProperties = filter === "all"
+        const filtered = filter === "all"
             ? properties
             : properties.filter(property => property.type === filter);
 
-        grid.innerHTML = filteredProperties.map(property => {
-            const whatsappText = encodeURIComponent(
+        grid.innerHTML = filtered.map(property => {
+            const message = encodeURIComponent(
                 `مرحبًا، أرغب في الاستفسار عن العقار: ${property.title} - ${property.location} - السعر: ${property.price}`
             );
 
@@ -217,14 +220,11 @@ function addPropertiesSection() {
 
                     <div class="property-content">
                         <h3>${property.title}</h3>
-
                         <p class="property-location">
                             <i class="fa-solid fa-location-dot"></i>
                             ${property.location}
                         </p>
-
                         <p class="property-details">${property.details}</p>
-
                         <strong class="property-price">${property.price}</strong>
 
                         <div class="property-contact-buttons">
@@ -234,7 +234,7 @@ function addPropertiesSection() {
                             </a>
 
                             <a class="property-whatsapp-btn"
-                               href="https://wa.me/${companyWhatsApp}?text=${whatsappText}"
+                               href="https://wa.me/${companyWhatsApp}?text=${message}"
                                target="_blank"
                                rel="noopener">
                                 <i class="fa-brands fa-whatsapp"></i>
@@ -247,11 +247,11 @@ function addPropertiesSection() {
         }).join("");
     }
 
-    filters.forEach(filterButton => {
-        filterButton.addEventListener("click", () => {
-            filters.forEach(button => button.classList.remove("active"));
-            filterButton.classList.add("active");
-            renderProperties(filterButton.dataset.filter);
+    filters.forEach(button => {
+        button.addEventListener("click", () => {
+            filters.forEach(item => item.classList.remove("active"));
+            button.classList.add("active");
+            renderProperties(button.dataset.filter);
         });
     });
 
@@ -260,7 +260,7 @@ function addPropertiesSection() {
 
 addPropertiesSection();
 
-/*================ SOCIAL LINKS IN FOOTER =================*/
+/*================ FOOTER SOCIAL LINKS =================*/
 
 function addSocialLinks() {
     const footer = document.querySelector("footer .container");
@@ -273,36 +273,19 @@ function addSocialLinks() {
     socialLinks.className = "footer-social";
 
     socialLinks.innerHTML = `
-        <a href="https://wa.me/${companyWhatsApp}"
-           target="_blank"
-           rel="noopener"
-           aria-label="واتساب">
+        <a href="https://wa.me/${companyWhatsApp}" target="_blank" rel="noopener" aria-label="واتساب">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
-
-        <a href="https://www.instagram.com/"
-           target="_blank"
-           rel="noopener"
-           aria-label="إنستغرام">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="إنستغرام">
             <i class="fa-brands fa-instagram"></i>
         </a>
-
-        <a href="https://www.tiktok.com/"
-           target="_blank"
-           rel="noopener"
-           aria-label="تيك توك">
+        <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="تيك توك">
             <i class="fa-brands fa-tiktok"></i>
         </a>
-
-        <a href="https://www.linkedin.com/"
-           target="_blank"
-           rel="noopener"
-           aria-label="لينكدإن">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="لينكدإن">
             <i class="fa-brands fa-linkedin-in"></i>
         </a>
-
-        <a href="mailto:aberalakariah@gmail.com"
-           aria-label="البريد الإلكتروني">
+        <a href="mailto:aberalakariah@gmail.com" aria-label="البريد الإلكتروني">
             <i class="fa-solid fa-envelope"></i>
         </a>
     `;
@@ -311,212 +294,6 @@ function addSocialLinks() {
 }
 
 addSocialLinks();
-
-/*================ DYNAMIC STYLES =================*/
-
-const propertyStyles = document.createElement("style");
-
-propertyStyles.textContent = `
-    .properties-section {
-        padding: 120px 0;
-        background: #f8f8f8;
-    }
-
-    .property-filters {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
-    }
-
-    .property-filter {
-        border: 1px solid #c8a04d;
-        background: #fff;
-        color: #333;
-        padding: 12px 24px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Cairo', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        transition: .3s;
-    }
-
-    .property-filter:hover,
-    .property-filter.active {
-        background: #c8a04d;
-        color: #fff;
-    }
-
-    .properties-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 28px;
-    }
-
-    .property-card {
-        overflow: hidden;
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, .08);
-        transition: .35s;
-    }
-
-    .property-card:hover {
-        transform: translateY(-8px);
-    }
-
-    .property-image {
-        position: relative;
-        height: 230px;
-    }
-
-    .property-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .property-status {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        padding: 7px 14px;
-        border-radius: 8px;
-        background: #c8a04d;
-        color: #fff;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .property-content {
-        padding: 24px;
-    }
-
-    .property-content h3 {
-        margin-bottom: 10px;
-        font-size: 22px;
-    }
-
-    .property-location {
-        color: #777;
-        margin-bottom: 12px;
-    }
-
-    .property-location i {
-        color: #c8a04d;
-        margin-left: 5px;
-    }
-
-    .property-details {
-        min-height: 52px;
-        color: #777;
-        line-height: 1.8;
-        font-size: 14px;
-    }
-
-    .property-price {
-        display: block;
-        margin: 20px 0;
-        color: #b28732;
-        font-size: 18px;
-    }
-
-    .property-contact-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        padding-top: 18px;
-        border-top: 1px solid #eee;
-    }
-
-    .property-contact-buttons a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 7px;
-        padding: 11px 8px;
-        border-radius: 9px;
-        color: #fff;
-        font-size: 14px;
-        font-weight: 700;
-        transition: .3s;
-    }
-
-    .property-call-btn {
-        background: #b28732;
-    }
-
-    .property-whatsapp-btn {
-        background: #25d366;
-    }
-
-    .property-contact-buttons a:hover {
-        transform: translateY(-2px);
-        opacity: .88;
-    }
-
-    .footer-social {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin: 22px 0 10px;
-    }
-
-    .footer-social a {
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: #2b2b2b;
-        color: #fff;
-        font-size: 18px;
-        transition: .3s;
-    }
-
-    .footer-social a:hover {
-        background: #c8a04d;
-        transform: translateY(-4px);
-    }
-
-    body.dark .properties-section {
-        background: #181818;
-    }
-
-    body.dark .property-card {
-        background: #242424;
-    }
-
-    body.dark .property-filter {
-        background: #242424;
-        color: #fff;
-    }
-
-    body.dark .property-filter:hover,
-    body.dark .property-filter.active {
-        background: #c8a04d;
-    }
-
-    body.dark .property-contact-buttons {
-        border-color: #3a3a3a;
-    }
-
-    @media (max-width: 600px) {
-        .properties-section {
-            padding: 80px 0;
-        }
-
-        .property-contact-buttons {
-            grid-template-columns: 1fr;
-        }
-    }
-`;
-
-document.head.appendChild(propertyStyles);
 
 /*================ STATISTICS COUNTER =================*/
 
@@ -527,8 +304,8 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = Number(counter.dataset.target);
         const isPercent = target === 100;
-        const duration = 1500;
         const startTime = performance.now();
+        const duration = 1500;
 
         function updateCounter(currentTime) {
             const progress = Math.min(
@@ -537,10 +314,7 @@ function animateCounters() {
             );
 
             const value = Math.floor(progress * target);
-
-            counter.textContent = isPercent
-                ? `${value}%`
-                : `${value}+`;
+            counter.textContent = isPercent ? `${value}%` : `${value}+`;
 
             if (progress < 1) {
                 requestAnimationFrame(updateCounter);
@@ -552,22 +326,18 @@ function animateCounters() {
 }
 
 if (statsSection && "IntersectionObserver" in window) {
-    const statsObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !countersAnimated) {
-                animateCounters();
-                countersAnimated = true;
-                statsObserver.disconnect();
-            }
-        });
-    }, {
-        threshold: 0.4
-    });
+    const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !countersAnimated) {
+            animateCounters();
+            countersAnimated = true;
+            observer.disconnect();
+        }
+    }, { threshold: 0.4 });
 
-    statsObserver.observe(statsSection);
+    observer.observe(statsSection);
 }
 
-/*================ WHATSAPP INQUIRY =================*/
+/*================ INQUIRY FORM =================*/
 
 if (inquiryForm) {
     inquiryForm.addEventListener("submit", event => {
@@ -578,14 +348,7 @@ if (inquiryForm) {
             return;
         }
 
-        const formData = new FormData(inquiryForm);
-
-        const clientName = formData.get("client_name");
-        const clientPhone = formData.get("client_phone");
-        const clientEmail = formData.get("client_email") || "غير مضاف";
-        const serviceType = formData.get("service_type");
-        const inquiryMessage = formData.get("message");
-
+        const data = new FormData(inquiryForm);
         const serviceNames = {
             brokerage: "الوساطة العقارية",
             management: "إدارة العقارات وتشغيلها",
@@ -594,22 +357,23 @@ if (inquiryForm) {
             consultation: "استشارة عقارية"
         };
 
-        const whatsappMessage = `
+        const message = `
 مرحباً، لدي استفسار جديد من الموقع العقاري:
 
-الاسم: ${clientName}
-رقم الهاتف: ${clientPhone}
-البريد الإلكتروني: ${clientEmail}
-نوع الخدمة: ${serviceNames[serviceType] || serviceType}
+الاسم: ${data.get("client_name")}
+رقم الهاتف: ${data.get("client_phone")}
+البريد الإلكتروني: ${data.get("client_email") || "غير مضاف"}
+نوع الخدمة: ${serviceNames[data.get("service_type")] || data.get("service_type")}
 
 تفاصيل الاستفسار:
-${inquiryMessage}
+${data.get("message")}
         `.trim();
 
-        const whatsappUrl =
-            `https://wa.me/${companyWhatsApp}?text=${encodeURIComponent(whatsappMessage)}`;
-
-        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+        window.open(
+            `https://wa.me/${companyWhatsApp}?text=${encodeURIComponent(message)}`,
+            "_blank",
+            "noopener,noreferrer"
+        );
 
         if (formMessage) {
             formMessage.textContent =
