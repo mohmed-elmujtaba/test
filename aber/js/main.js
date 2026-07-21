@@ -9,27 +9,160 @@ const counters = document.querySelectorAll(".stat h2");
 const inquiryForm = document.getElementById("inquiry-form");
 const formMessage = document.getElementById("form-message");
 
-/*================ THEME TOGGLE =================*/
+const companyPhone = "0575700009";
+const companyWhatsApp = "966575700009";
+
+/*================ MOBILE HEADER =================*/
+
+const mobileHeaderStyle = document.createElement("style");
+
+mobileHeaderStyle.textContent = `
+@media (max-width: 991px) {
+    body {
+        padding-top: 76px;
+    }
+
+    header {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        transform: translateY(0);
+        transition: transform .3s ease !important;
+    }
+
+    header.hide {
+        transform: translateY(-110%) !important;
+    }
+
+    header .container {
+        width: 94% !important;
+    }
+
+    header nav {
+        min-height: 76px !important;
+        height: 76px !important;
+        padding: 8px 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+    }
+
+    header .logo {
+        flex-shrink: 0;
+    }
+
+    header .logo img {
+        width: auto !important;
+        height: 52px !important;
+        max-width: 135px !important;
+    }
+
+    header .nav-actions {
+        width: auto !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 7px !important;
+    }
+
+    header .nav-actions ul {
+        position: absolute !important;
+        top: 68px !important;
+        right: 0 !important;
+        width: 220px !important;
+        margin: 0 !important;
+        padding: 8px !important;
+        display: none !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        background: rgba(15, 15, 15, .98) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+    }
+
+    header .nav-actions.menu-open ul {
+        display: flex !important;
+    }
+
+    header .nav-actions ul li a {
+        display: block !important;
+        padding: 10px 12px !important;
+        white-space: nowrap !important;
+    }
+
+    header .menu-toggle,
+    header #theme-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        flex-shrink: 0 !important;
+    }
+
+    header .btn-call {
+        display: none !important;
+    }
+
+    .hero-content {
+        padding-top: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    header .container {
+        width: 96% !important;
+    }
+
+    header .logo img {
+        height: 46px !important;
+        max-width: 120px !important;
+    }
+
+    header .menu-toggle,
+    header #theme-toggle {
+        width: 37px !important;
+        height: 37px !important;
+        font-size: 15px !important;
+    }
+
+    header .nav-actions ul {
+        width: 205px !important;
+    }
+}
+`;
+
+document.head.appendChild(mobileHeaderStyle);
+
+/*================ THEME =================*/
 
 function updateThemeIcon() {
-    if (body.classList.contains("dark")) {
-        themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-        themeBtn.setAttribute("aria-label", "تفعيل الوضع النهاري");
-        logo.src = "images/logo.png";
-    } else {
-        themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-        themeBtn.setAttribute("aria-label", "تفعيل الوضع الليلي");
-        logo.src = "images/logo.png";
-    }
+    if (!themeBtn) return;
+
+    const isDark = body.classList.contains("dark");
+
+    themeBtn.innerHTML = isDark
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+
+    themeBtn.setAttribute(
+        "aria-label",
+        isDark ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي"
+    );
 }
 
 if (localStorage.getItem("theme") === "dark") {
     body.classList.add("dark");
 }
 
-if (themeBtn && logo) {
-    updateThemeIcon();
+updateThemeIcon();
 
+if (themeBtn) {
     themeBtn.addEventListener("click", () => {
         body.classList.toggle("dark");
 
@@ -44,11 +177,22 @@ if (themeBtn && logo) {
 
 /*================ MOBILE MENU =================*/
 
+function closeMenu() {
+    if (!navActions || !menuBtn) return;
+
+    navActions.classList.remove("menu-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "فتح القائمة");
+    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+}
+
 if (menuBtn && navActions) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", event => {
+        event.stopPropagation();
+
         const isOpen = navActions.classList.toggle("menu-open");
 
-        menuBtn.setAttribute("aria-expanded", isOpen);
+        menuBtn.setAttribute("aria-expanded", String(isOpen));
         menuBtn.setAttribute(
             "aria-label",
             isOpen ? "إغلاق القائمة" : "فتح القائمة"
@@ -60,41 +204,55 @@ if (menuBtn && navActions) {
     });
 
     menuLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            navActions.classList.remove("menu-open");
-            menuBtn.setAttribute("aria-expanded", "false");
-            menuBtn.setAttribute("aria-label", "فتح القائمة");
-            menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-        });
+        link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", event => {
+        if (!navActions.contains(event.target)) {
+            closeMenu();
+        }
     });
 }
 
 /*================ HEADER SCROLL =================*/
 
-let lastScrollTop = 0;
+let lastScrollTop = window.scrollY;
+let scrollTimer;
 
 window.addEventListener("scroll", () => {
-    const currentScroll =
-        window.pageYOffset || document.documentElement.scrollTop;
+    if (!header) return;
 
-    if (!header) {
-        return;
-    }
+    const currentScroll = Math.max(window.scrollY, 0);
+    const scrollingDown = currentScroll > lastScrollTop;
+    const isMobile = window.innerWidth <= 991;
 
-    header.classList.toggle("scrolled", currentScroll > 120);
+    header.classList.toggle("scrolled", currentScroll > 80);
 
-    // إبقاء الهيدر ثابتًا وعدم إخفائه على الهاتف
-    if (window.innerWidth > 991) {
-        if (currentScroll > lastScrollTop && currentScroll > 100) {
-            header.classList.add("hide");
-        } else {
-            header.classList.remove("hide");
-        }
+    if (currentScroll < 20) {
+        header.classList.remove("hide");
+    } else if (scrollingDown) {
+        header.classList.add("hide");
+        closeMenu();
     } else {
         header.classList.remove("hide");
     }
 
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    lastScrollTop = currentScroll;
+
+    clearTimeout(scrollTimer);
+
+    scrollTimer = setTimeout(() => {
+        if (!isMobile && currentScroll < 20) {
+            header.classList.remove("hide");
+        }
+    }, 120);
+}, { passive: true });
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 991) {
+        closeMenu();
+        header?.classList.remove("hide");
+    }
 });
 
 /*================ PROPERTIES =================*/
@@ -156,17 +314,13 @@ const properties = [
     }
 ];
 
-const companyPhone = "0575700009";
-const companyWhatsApp = "966575700009";
-
 function addPropertiesSection() {
     const projectsSection = document.querySelector("#projects");
 
-    if (!projectsSection || document.querySelector("#properties")) {
-        return;
-    }
+    if (!projectsSection || document.querySelector("#properties")) return;
 
     const section = document.createElement("section");
+
     section.id = "properties";
     section.className = "properties-section";
 
@@ -181,25 +335,19 @@ function addPropertiesSection() {
             </div>
 
             <div class="property-filters">
-                <button class="property-filter active" data-filter="all">
-                    جميع العقارات
-                </button>
-                <button class="property-filter" data-filter="sale">
-                    عقارات للبيع
-                </button>
-                <button class="property-filter" data-filter="rent">
-                    عقارات للإيجار
-                </button>
+                <button class="property-filter active" data-filter="all">جميع العقارات</button>
+                <button class="property-filter" data-filter="sale">عقارات للبيع</button>
+                <button class="property-filter" data-filter="rent">عقارات للإيجار</button>
             </div>
 
             <div class="properties-grid" id="properties-grid"></div>
         </div>
     `;
 
-    projectsSection.parentNode.insertBefore(section, projectsSection);
+    projectsSection.before(section);
 
     const grid = document.getElementById("properties-grid");
-    const filters = document.querySelectorAll(".property-filter");
+    const filters = section.querySelectorAll(".property-filter");
 
     function renderProperties(filter = "all") {
         const filtered = filter === "all"
@@ -265,11 +413,10 @@ addPropertiesSection();
 function addSocialLinks() {
     const footer = document.querySelector("footer .container");
 
-    if (!footer || document.querySelector(".footer-social")) {
-        return;
-    }
+    if (!footer || footer.querySelector(".footer-social")) return;
 
     const socialLinks = document.createElement("div");
+
     socialLinks.className = "footer-social";
 
     socialLinks.innerHTML = `
@@ -282,9 +429,6 @@ function addSocialLinks() {
         <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="تيك توك">
             <i class="fa-brands fa-tiktok"></i>
         </a>
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="لينكدإن">
-            <i class="fa-brands fa-linkedin-in"></i>
-        </a>
         <a href="mailto:aberalakariah@gmail.com" aria-label="البريد الإلكتروني">
             <i class="fa-solid fa-envelope"></i>
         </a>
@@ -295,7 +439,7 @@ function addSocialLinks() {
 
 addSocialLinks();
 
-/*================ STATISTICS COUNTER =================*/
+/*================ STATISTICS =================*/
 
 const statsSection = document.querySelector(".stats");
 let countersAnimated = false;
@@ -305,11 +449,10 @@ function animateCounters() {
         const target = Number(counter.dataset.target);
         const isPercent = target === 100;
         const startTime = performance.now();
-        const duration = 1500;
 
         function updateCounter(currentTime) {
             const progress = Math.min(
-                (currentTime - startTime) / duration,
+                (currentTime - startTime) / 1500,
                 1
             );
 
@@ -349,6 +492,7 @@ if (inquiryForm) {
         }
 
         const data = new FormData(inquiryForm);
+
         const serviceNames = {
             brokerage: "الوساطة العقارية",
             management: "إدارة العقارات وتشغيلها",
